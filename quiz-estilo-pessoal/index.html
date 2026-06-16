@@ -1222,6 +1222,14 @@
     'use strict';
 
     /* ----------------------------------------------------------
+       CONFIGURAÇÃO — edite aqui
+       ---------------------------------------------------------- */
+    // Cole aqui a URL do seu Google Apps Script após o deploy:
+    const WEBHOOK_URL = '';
+    // Deixe vazio ('') para desativar o envio para planilha durante testes.
+
+
+    /* ----------------------------------------------------------
        QUIZ DATA
        ---------------------------------------------------------- */
     const QUESTIONS = [
@@ -1378,7 +1386,7 @@
         body: 'Seu perfil indica que um acompanhamento personalizado pode acelerar significativamente sua evolução — construindo uma imagem alinhada aos seus objetivos, valores e momento de vida.',
         btnClass: 'btn-cta btn-cta-consult',
         btnText: 'Agendar conversa',
-        btnHref: '#agendar', // ← Substitua pelo link real
+        btnHref: 'https://wa.me/5511971202293?text=Ol%C3%A1,%20acabei%20de%20fazer%20o%20teste%20de%20Estilo,%20gostaria%20de%20conhecer%20a%20consultoria%20de%20imagem%20estrat%C3%A9gica.%20',
       },
       digital: {
         eyebrow: 'Recomendação personalizada',
@@ -1558,6 +1566,42 @@
       state.lead = { name, whatsapp, instagram };
       console.log('📋 Lead:', state.lead);
       console.log('📊 Respostas:', state.answers);
+
+      // Calcula estilo e oferta antecipadamente para enviar na planilha
+      const styleLetter = calculateStyle();
+      const offerType   = calculateOffer();
+      const styleNames  = { A:'Clássico', B:'Natural', C:'Romântico', D:'Sensual', E:'Criativo', F:'Moderno' };
+      const offerNames  = { consultoria:'Consultoria', digital:'Produto Digital' };
+
+      // Monta payload para a planilha
+      const payload = {
+        timestamp:  new Date().toISOString(),
+        nome:       name,
+        whatsapp:   whatsapp,
+        instagram:  instagram,
+        p1:         state.answers[0] || '',
+        p2:         state.answers[1] || '',
+        p3:         state.answers[2] || '',
+        p4:         state.answers[3] || '',
+        p5:         state.answers[4] || '',
+        p6:         state.answers[5] || '',
+        p7:         state.answers[6] || '',
+        p8:         state.answers[7] || '',
+        estilo:     styleNames[styleLetter] || styleLetter,
+        oferta:     offerNames[offerType]   || offerType,
+      };
+
+      // Envia para Google Sheets (se URL configurada)
+      if (WEBHOOK_URL) {
+        fetch(WEBHOOK_URL, {
+          method:  'POST',
+          mode:    'no-cors', // evita erro de CORS com Apps Script
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        }).catch(err => console.warn('Webhook error:', err));
+      }
+
+      console.log('📊 Payload enviado:', payload);
 
       buildResult();
       showScreen('screen-result');
