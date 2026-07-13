@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz de Arquétipos | Elaine Arnone</title>
+  <meta name="description"
+    content="Descubra seu arquétipo predominante e o próximo passo para transformar sua imagem com Elaine Arnone — consultora de imagem premium." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — Identidade Visual Elaine Arnone
+       ============================================================ */
+    :root {
+      /* Paleta principal */
+      --black: #0D0D0D;
+      --black-card: #141414;
+      --black-hover: #1C1C1C;
+      --black-border: #242424;
+      --gold: #C8A46A;
+      --gold-light: #DFC18A;
+      --gold-dim: rgba(200, 164, 106, 0.15);
+      --gold-border: rgba(200, 164, 106, 0.3);
+      --champagne: #E7D9C8;
+      --champagne-dim: #E7D9C820;
+      --white: #FFFFFF;
+      --white-70: rgba(255, 255, 255, 0.7);
+      --white-40: rgba(255, 255, 255, 0.4);
+      --white-15: rgba(255, 255, 255, 0.07);
+
+      /* Tipografia */
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Montserrat', system-ui, sans-serif;
+
+      /* Spacing & Radius */
+      --r-sm: 6px;
+      --r-md: 12px;
+      --r-lg: 20px;
+      --r-xl: 40px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --t-fast: 0.2s var(--ease);
+      --t-med: 0.35s var(--ease);
+      --t-slow: 0.55s var(--ease);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--black);
+      color: var(--white);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* Subtle background texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 100% 0%, rgba(200, 164, 106, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 0% 100%, rgba(200, 164, 106, 0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    #app {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 660px;
+      padding: 0 20px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ============================================================
+       SCREEN SYSTEM
+       ============================================================ */
+    .screen {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% center;
+      }
+
+      100% {
+        background-position: 200% center;
+      }
+    }
+
+    @keyframes floatUpDown {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOutLeft {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+    }
+
+    .anim-fadeup {
+      animation: fadeUp var(--t-slow) both;
+    }
+
+    /* ============================================================
+       BRAND HEADER
+       ============================================================ */
+    .brand-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 0 36px;
+    }
+
+    .brand-monogram {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .brand-monogram span {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-style: italic;
+      color: var(--gold);
+      letter-spacing: -1px;
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: clamp(13px, 2.5vw, 15px);
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--white-70);
+    }
+
+    .brand-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+      margin-top: 28px;
+    }
+
+    /* ============================================================
+       GOLD LINE SEPARATOR
+       ============================================================ */
+    .gold-rule {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto;
+      opacity: 0.6;
+    }
+
+    .gold-rule--wide {
+      width: 100%;
+      background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+    }
+
+    /* ============================================================
+       WELCOME SCREEN
+       ============================================================ */
+    .welcome-hero {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--black-border);
+      margin-bottom: 2px;
+      overflow: hidden;
+      animation: fadeUp 0.7s var(--ease) both;
+    }
+
+    .welcome-photo {
+      position: relative;
+      min-height: 380px;
+      overflow: hidden;
+    }
+
+    .welcome-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: contrast(1.04) brightness(0.97);
+      transition: transform 8s ease;
+    }
+
+    .welcome-photo img:hover {
+      transform: scale(1.02);
+    }
+
+    /* Subtle fade to blend with card on the right edge only */
+    .welcome-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right,
+          transparent 70%,
+          rgba(20, 20, 20, 0.6) 100%);
+      pointer-events: none;
+    }
+
+    .welcome-content {
+      background: var(--black-card);
+      padding: clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid var(--black-border);
+    }
+
+    .welcome-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .welcome-title {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .welcome-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .welcome-divider {
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+      margin-bottom: 20px;
+    }
+
+    .welcome-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .welcome-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--white-70);
+      line-height: 1.55;
+    }
+
+    .welcome-list li::before {
+      content: '—';
+      color: var(--gold);
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Full-width mobile fallback */
+    @media (max-width: 560px) {
+      .welcome-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome-photo {
+        min-height: 260px;
+      }
+
+      .welcome-photo::after {
+        background: linear-gradient(to bottom, transparent 50%, var(--black) 100%);
+      }
+    }
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
+
+    /* Primary — gold filled */
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 18px 44px;
+      border-radius: var(--r-xl);
+      border: none;
+      cursor: pointer;
+      transition: var(--t-med);
+      width: 100%;
+      max-width: 300px;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.12) 50%, transparent 100%);
+      background-size: 200% auto;
+      opacity: 0;
+      transition: opacity var(--t-med);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(200, 164, 106, 0.3);
+    }
+
+    .btn-gold:hover::before {
+      opacity: 1;
+      animation: shimmer 1.5s linear infinite;
+    }
+
+    .btn-gold:active {
+      transform: translateY(0);
+    }
+
+    /* Outline — gold border */
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--gold);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 16px 40px;
+      border-radius: var(--r-xl);
+      border: 1px solid var(--gold-border);
+      cursor: pointer;
+      transition: var(--t-med);
+      width: 100%;
+      max-width: 300px;
+      text-decoration: none;
+    }
+
+    .btn-outline:hover {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+    }
+
+    /* Ghost — back button */
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white-40);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      border-radius: var(--r-xl);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      transition: var(--t-fast);
+    }
+
+    .btn-ghost:hover {
+      color: var(--white-70);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-ghost:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+
+    /* Next / Continue */
+    .btn-next {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 15px 36px;
+      border-radius: var(--r-xl);
+      border: none;
+      cursor: pointer;
+      transition: var(--t-med);
+      flex: 1;
+      max-width: 200px;
+    }
+
+    .btn-next:hover {
+      background: var(--gold-light);
+      box-shadow: 0 6px 24px rgba(200, 164, 106, 0.25);
+    }
+
+    .btn-next:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* CTA large */
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 22px 56px;
+      border-radius: var(--r-xl);
+      border: none;
+      cursor: pointer;
+      transition: var(--t-med);
+      width: 100%;
+      max-width: 380px;
+      text-decoration: none;
+    }
+
+    .btn-cta-consult {
+      background: var(--gold);
+      color: var(--black);
+      box-shadow: 0 4px 30px rgba(200, 164, 106, 0.2);
+    }
+
+    .btn-cta-consult:hover {
+      background: var(--gold-light);
+      box-shadow: 0 10px 40px rgba(200, 164, 106, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-cta-digital {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+
+    .btn-cta-digital:hover {
+      background: var(--gold-dim);
+      box-shadow: 0 6px 30px rgba(200, 164, 106, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       PROGRESS BAR
+       ============================================================ */
+    .progress-wrapper {
+      width: 100%;
+      margin-bottom: 28px;
+      animation: fadeIn 0.4s ease both;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .progress-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white-40);
+      font-weight: 400;
+    }
+
+    .progress-count {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .progress-track {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+      transition: width 0.6s var(--ease);
+    }
+
+    .progress-dot {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 8px rgba(200, 164, 106, 0.6);
+      transition: left 0.6s var(--ease);
+    }
+
+    /* ============================================================
+       QUESTION CARD
+       ============================================================ */
+    .question-wrap {
+      width: 100%;
+      animation: fadeUp var(--t-slow) both;
+    }
+
+    .question-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-top: 1px solid var(--gold-border);
+      padding: clamp(32px, 5vw, 52px) clamp(24px, 4vw, 44px);
+      width: 100%;
+    }
+
+    .question-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .question-tag::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .question-text {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 4vw, 26px);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.35;
+      margin-bottom: 36px;
+    }
+
+    /* Options */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--black-border);
+      padding: 16px 20px 16px 16px;
+      cursor: pointer;
+      transition: var(--t-fast);
+      text-align: left;
+      color: var(--white-70);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.5;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-btn::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: var(--gold);
+      opacity: 0.06;
+      transition: width var(--t-fast);
+    }
+
+    .option-btn:hover {
+      border-color: var(--gold-border);
+      color: var(--white);
+    }
+
+    .option-btn:hover::before {
+      width: 100%;
+    }
+
+    .option-btn.selected {
+      border-color: var(--gold);
+      color: var(--white);
+      background: var(--gold-dim);
+    }
+
+    .option-btn.selected::before {
+      width: 0;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--white-40);
+      font-family: var(--font-serif);
+      font-style: italic;
+      transition: var(--t-fast);
+      flex-shrink: 0;
+    }
+
+    .option-btn:hover .option-letter {
+      border-color: var(--gold-border);
+      color: var(--gold);
+    }
+
+    .option-btn.selected .option-letter {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--black);
+    }
+
+    /* Hint */
+    .selection-hint {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--white-40);
+      text-align: center;
+      margin-top: 16px;
+      opacity: 0;
+      transition: opacity var(--t-fast);
+      font-style: italic;
+    }
+
+    .selection-hint.visible {
+      opacity: 1;
+    }
+
+    /* Navigation */
+    .question-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Question transition animations */
+    .question-exit {
+      animation: slideOutLeft 0.28s var(--ease) both;
+    }
+
+    .question-enter {
+      animation: slideInRight 0.4s var(--ease) both;
+    }
+
+    /* ============================================================
+       LEAD FORM
+       ============================================================ */
+    .form-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-top: 1px solid var(--gold-border);
+      padding: clamp(36px, 5vw, 56px) clamp(24px, 5vw, 48px);
+      width: 100%;
+      animation: fadeUp var(--t-slow) both;
+    }
+
+    .form-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .form-title {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 4.5vw, 34px);
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .form-title em {
+      font-style: italic;
+      color: var(--champagne);
+    }
+
+    .form-subtitle {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--white-40);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white-40);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--black-border);
+      padding: 12px 0;
+      color: var(--white);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color var(--t-fast);
+      border-radius: 0;
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+      font-weight: 300;
+    }
+
+    .form-input:focus {
+      border-bottom-color: var(--gold);
+    }
+
+    .form-hint {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.2);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .form-submit-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 44px;
+    }
+
+    /* ============================================================
+       RESULT SCREEN
+       ============================================================ */
+    .result-screen {
+      animation: fadeUp var(--t-slow) both;
+      width: 100%;
+    }
+
+    /* Top strip */
+    .result-strip {
+      width: 100%;
+      background: var(--gold);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .result-strip__line {
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .result-strip__text {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--black);
+      font-weight: 600;
+    }
+
+    /* Style reveal */
+    .result-reveal {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-top: none;
+      padding: clamp(44px, 6vw, 72px) clamp(28px, 5vw, 52px);
+      text-align: center;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-reveal::before {
+      content: attr(data-style);
+      position: absolute;
+      bottom: -20px;
+      right: -10px;
+      font-family: var(--font-serif);
+      font-size: 160px;
+      font-weight: 400;
+      color: rgba(200, 164, 106, 0.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .result-icon {
+      font-size: 44px;
+      display: block;
+      margin-bottom: 24px;
+      animation: floatUpDown 3s ease-in-out infinite;
+    }
+
+    .result-name-label {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-40);
+      margin-bottom: 6px;
+      font-weight: 300;
+    }
+
+    .result-style-name {
+      font-family: var(--font-serif);
+      font-size: clamp(48px, 10vw, 76px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .result-gold-rule {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 24px;
+      opacity: 0.6;
+    }
+
+    .result-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .result-keyword {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 6px 16px;
+      border: 1px solid var(--gold-border);
+      font-weight: 400;
+    }
+
+    /* Description card */
+    .result-desc-card {
+      background: var(--black);
+      border: 1px solid var(--black-border);
+      border-top: none;
+      padding: clamp(28px, 4vw, 44px) clamp(28px, 5vw, 52px);
+      width: 100%;
+    }
+
+    .result-desc-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .result-description {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--white-70);
+      line-height: 1.8;
+    }
+
+    .result-description p+p {
+      margin-top: 16px;
+    }
+
+    /* CTA card */
+    .result-cta-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-top: 1px solid var(--gold-border);
+      padding: clamp(36px, 5vw, 56px) clamp(28px, 5vw, 52px);
+      width: 100%;
+      margin-top: 2px;
+      text-align: center;
+    }
+
+    .cta-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .cta-title {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .cta-title em {
+      font-style: italic;
+    }
+
+    .cta-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--white-40);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-btn-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* ============================================================
+       BRAND FOOTER (bottom of every screen)
+       ============================================================ */
+    .screen-footer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 28px 0;
+    }
+
+    .screen-footer__rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--black-border), transparent);
+    }
+
+    .screen-footer__text {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.18);
+      font-weight: 300;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 480px) {
+      #app {
+        padding: 0 14px 60px;
+      }
+
+      .btn-gold,
+      .btn-outline,
+      .btn-cta {
+        max-width: 100%;
+      }
+
+      .btn-next {
+        max-width: none;
+      }
+
+      .question-nav {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- ====================================================
+         SCREEN 1: WELCOME
+         ==================================================== -->
+    <section id="screen-welcome" class="screen active" aria-label="Boas-vindas">
+
+      <header class="brand-header anim-fadeup">
+        <div class="brand-monogram"><span>EA</span></div>
+        <p class="brand-name">Elaine Arnone</p>
+        <div class="brand-rule"></div>
+      </header>
+
+      <div class="welcome-hero">
+        <!-- Portrait -->
+        <div class="welcome-photo">
+          <img src="elaine-hero.png" alt="Elaine Arnone — Consultora de Imagem" loading="eager" />
+        </div>
+
+        <!-- Content -->
+        <div class="welcome-content">
+          <p class="welcome-eyebrow">Quiz de Arquétipos</p>
+
+          <h1 class="welcome-title">
+            Descubra seu arquétipo e o próximo passo para <em>transformar sua imagem</em>
+          </h1>
+
+          <div class="welcome-divider"></div>
+
+          <ul class="welcome-list">
+            <li>Seu arquétipo predominante</li>
+            <li>O que sua essência comunica hoje</li>
+            <li>Qual o melhor caminho para alinhar sua imagem com sua verdadeira identidade</li>
+          </ul>
+
+          <button id="btn-start" class="btn-gold" onclick="startQuiz()" aria-label="Começar o quiz de arquétipos">
+            Começar
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="screen-footer">
+        <div class="screen-footer__rule"></div>
+        <p class="screen-footer__text">8 perguntas · Resultado imediato · Gratuito</p>
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         SCREEN 2: QUIZ
+         ==================================================== -->
+    <section id="screen-quiz" class="screen" aria-label="Perguntas do quiz">
+
+      <header class="brand-header" style="padding-bottom:20px;">
+        <div class="brand-monogram"><span>EA</span></div>
+        <p class="brand-name">Elaine Arnone</p>
+        <div class="brand-rule"></div>
+      </header>
+
+      <!-- Progress -->
+      <div class="progress-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="1"
+        aria-label="Progresso do quiz">
+        <div class="progress-meta">
+          <span class="progress-label">Progresso</span>
+          <span class="progress-count" id="progress-count">1 / 8</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:12.5%"></div>
+          <div class="progress-dot" id="progress-dot" style="left:12.5%"></div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="question-wrap" id="question-wrap">
+        <div class="question-card" id="question-card">
+          <p class="question-tag" id="question-number">Pergunta 01</p>
+          <h2 class="question-text" id="question-text"></h2>
+
+          <div class="options-list" id="options-list" role="list"></div>
+
+          <p class="selection-hint" id="selection-hint">Selecione uma opção para continuar</p>
+
+          <div class="question-nav">
+            <button class="btn-ghost" id="btn-back" onclick="goBack()" disabled aria-label="Voltar à pergunta anterior">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+              Voltar
+            </button>
+            <button class="btn-next" id="btn-next" onclick="goNext()" disabled aria-label="Próxima pergunta">
+              Continuar
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen-footer">
+        <div class="screen-footer__rule"></div>
+        <p class="screen-footer__text">Suas respostas são confidenciais</p>
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         SCREEN 3: LEAD FORM
+         ==================================================== -->
+    <section id="screen-form" class="screen" aria-label="Formulário de dados">
+
+      <header class="brand-header" style="padding-bottom:20px;">
+        <div class="brand-monogram"><span>EA</span></div>
+        <p class="brand-name">Elaine Arnone</p>
+        <div class="brand-rule"></div>
+      </header>
+
+      <div class="form-card">
+        <p class="form-eyebrow">Quase lá</p>
+        <h2 class="form-title">Para onde enviamos<br /><em>seu resultado?</em></h2>
+        <p class="form-subtitle">Preencha os campos abaixo para revelar seu arquétipo predominante e sua recomendação
+          personalizada.</p>
+
+        <form id="lead-form" onsubmit="submitForm(event)" novalidate>
+
+          <div class="form-group">
+            <label class="form-label" for="input-name">Seu nome</label>
+            <input class="form-input" type="text" id="input-name" name="name" placeholder="Como prefere ser chamada?"
+              autocomplete="given-name" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-whatsapp">WhatsApp</label>
+            <input class="form-input" type="tel" id="input-whatsapp" name="whatsapp" placeholder="(00) 00000-0000"
+              autocomplete="tel" required />
+            <p class="form-hint">Seu número não será compartilhado.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-instagram">Instagram</label>
+            <input class="form-input" type="text" id="input-instagram" name="instagram" placeholder="@seu.perfil"
+              autocomplete="username" required />
+          </div>
+
+          <div class="form-submit-wrap">
+            <button type="submit" class="btn-gold" aria-label="Revelar meu arquétipo">
+              Revelar meu arquétipo
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="screen-footer">
+        <div class="screen-footer__rule"></div>
+        <p class="screen-footer__text">Seus dados são confidenciais</p>
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         SCREEN 4: RESULT
+         ==================================================== -->
+    <section id="screen-result" class="screen" aria-label="Resultado do quiz">
+
+      <header class="brand-header" style="padding-bottom:20px;">
+        <div class="brand-monogram"><span>EA</span></div>
+        <p class="brand-name">Elaine Arnone</p>
+        <div class="brand-rule"></div>
+      </header>
+
+      <div class="result-screen">
+
+        <!-- Gold strip -->
+        <div class="result-strip">
+          <div class="result-strip__line"></div>
+          <p class="result-strip__text" id="result-strip-text">Resultado do Quiz</p>
+          <div class="result-strip__line"></div>
+        </div>
+
+        <!-- Style reveal -->
+        <div class="result-reveal" id="result-reveal" data-style="">
+          <span class="result-icon" id="result-icon" aria-hidden="true">✦</span>
+          <p class="result-name-label" id="result-name-label">Seu arquétipo predominante é</p>
+          <h2 class="result-style-name" id="result-style-name">—</h2>
+          <div class="result-gold-rule"></div>
+          <div class="result-keywords" id="result-keywords"></div>
+        </div>
+
+        <!-- Description -->
+        <div class="result-desc-card">
+          <p class="result-desc-eyebrow">Sobre o seu arquétipo</p>
+          <div class="result-description" id="result-description"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="result-cta-card">
+          <p class="cta-eyebrow" id="cta-eyebrow">Próximo passo</p>
+          <h3 class="cta-title" id="cta-title"></h3>
+          <p class="cta-body" id="cta-body"></p>
+          <div class="cta-btn-wrap" id="cta-btn-wrap"></div>
+        </div>
+
+      </div>
+
+      <div class="screen-footer">
+        <div class="screen-footer__rule"></div>
+        <p class="screen-footer__text">© Elaine Arnone · Consultoria de Imagem</p>
+      </div>
+
+    </section>
+
+  </div><!-- /#app -->
+
+
+  <!-- ============================================================
+       JAVASCRIPT — QUIZ ENGINE (lógica 100% preservada)
+       ============================================================ -->
+  <script>
+    'use strict';
+
+    /* ----------------------------------------------------------
+       CONFIGURAÇÃO — edite aqui
+       ---------------------------------------------------------- */
+    // Cole aqui a URL do seu Google Apps Script após o deploy:
+    const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwTiDOMEcP2s_IgwJ5I6c859BPyjxexjKweAuI-F38XIqfs856zsRX4RxoyI0KWgRyJ5A/exec';
+    // Deixe vazio ('') para desativar o envio para planilha durante testes.
+
+
+    /* ----------------------------------------------------------
+       QUIZ DATA
+       ---------------------------------------------------------- */
+    const QUESTIONS = [
+      {
+        id: 1,
+        text: 'O que mais te move na vida?',
+        options: [
+          { letter: 'A', text: 'Viver em paz, leveza e harmonia', archetype: 'Inocente' },
+          { letter: 'B', text: 'Liberdade e novas experiências', archetype: 'Explorador' },
+          { letter: 'C', text: 'Entender profundamente as coisas', archetype: 'Sábio' },
+          { letter: 'D', text: 'Superar desafios e vencer', archetype: 'Herói' }
+        ]
+      },
+      {
+        id: 2,
+        text: 'Quando você entra em um ambiente novo...',
+        options: [
+          { letter: 'A', text: 'Observa e busca segurança', archetype: 'Cara Comum' },
+          { letter: 'B', text: 'Quer se conectar e agradar', archetype: 'Cuidador' },
+          { letter: 'C', text: 'Analisa tudo mentalmente', archetype: 'Sábio' },
+          { letter: 'D', text: 'Quer se destacar rapidamente', archetype: 'Governante' }
+        ]
+      },
+      {
+        id: 3,
+        text: 'Seu estilo de comunicação...',
+        options: [
+          { letter: 'A', text: 'Leve e otimista', archetype: 'Inocente' },
+          { letter: 'B', text: 'Divertido', archetype: 'Bobo da Corte' },
+          { letter: 'C', text: 'Direto e intenso', archetype: 'Fora da Lei' },
+          { letter: 'D', text: 'Inspirador', archetype: 'Mago' }
+        ]
+      },
+      {
+        id: 4,
+        text: 'O que mais te incomoda?',
+        options: [
+          { letter: 'A', text: 'Negatividade', archetype: 'Inocente' },
+          { letter: 'B', text: 'Falta de liberdade', archetype: 'Explorador' },
+          { letter: 'C', text: 'Ignorância', archetype: 'Sábio' },
+          { letter: 'D', text: 'Fraqueza', archetype: 'Herói' }
+        ]
+      },
+      {
+        id: 5,
+        text: 'Seu estilo ideal de vida',
+        options: [
+          { letter: 'A', text: 'Simples', archetype: 'Cara Comum' },
+          { letter: 'B', text: 'Experiências', archetype: 'Explorador' },
+          { letter: 'C', text: 'Controle', archetype: 'Governante' },
+          { letter: 'D', text: 'Propósito', archetype: 'Mago' }
+        ]
+      },
+      {
+        id: 6,
+        text: 'Como prefere se expressar?',
+        options: [
+          { letter: 'A', text: 'Cuidando', archetype: 'Cuidador' },
+          { letter: 'B', text: 'Criando', archetype: 'Criador' },
+          { letter: 'C', text: 'Encantando', archetype: 'Amante' },
+          { letter: 'D', text: 'Provocando mudanças', archetype: 'Fora da Lei' }
+        ]
+      },
+      {
+        id: 7,
+        text: 'Em uma crise',
+        options: [
+          { letter: 'A', text: 'Ajuda primeiro', archetype: 'Cuidador' },
+          { letter: 'B', text: 'Assume o controle', archetype: 'Governante' },
+          { letter: 'C', text: 'Busca soluções criativas', archetype: 'Criador' },
+          { letter: 'D', text: 'Enfrenta de frente', archetype: 'Herói' }
+        ]
+      },
+      {
+        id: 8,
+        text: 'Seu maior desejo',
+        options: [
+          { letter: 'A', text: 'Liberdade', archetype: 'Explorador' },
+          { letter: 'B', text: 'Ser amado', archetype: 'Amante' },
+          { letter: 'C', text: 'Reconhecimento', archetype: 'Governante' },
+          { letter: 'D', text: 'Autenticidade', archetype: 'Criador' }
+        ]
+      }
+    ];
+
+    /* ----------------------------------------------------------
+       STYLE DATA
+       ---------------------------------------------------------- */
+    const ARCHETYPES = {
+      'Inocente': {
+        name: 'Inocente',
+        icon: '◇',
+        keywords: ['Paz', 'Leveza', 'Harmonia', 'Otimismo', 'Simplicidade'],
+        description: 'Você busca o lado bom da vida, valoriza a paz e a harmonia. Transmite leveza e otimismo.',
+      },
+      'Explorador': {
+        name: 'Explorador',
+        icon: '◇',
+        keywords: ['Liberdade', 'Aventura', 'Descoberta', 'Independência', 'Novidade'],
+        description: 'Você valoriza a liberdade acima de tudo. Sua jornada é movida pela busca constante por novas experiências.',
+      },
+      'Sábio': {
+        name: 'Sábio',
+        icon: '◇',
+        keywords: ['Conhecimento', 'Verdade', 'Análise', 'Profundidade', 'Inteligência'],
+        description: 'Você busca entender o mundo. Valoriza a verdade, a análise aprofundada e compartilha conhecimento com maestria.',
+      },
+      'Herói': {
+        name: 'Herói',
+        icon: '◇',
+        keywords: ['Superação', 'Coragem', 'Força', 'Determinação', 'Vitória'],
+        description: 'Você é movido por desafios e não foge da luta. Sua imagem transmite força, coragem e determinação.',
+      },
+      'Fora da Lei': {
+        name: 'Fora da Lei',
+        icon: '◇',
+        keywords: ['Revolução', 'Quebra de regras', 'Intensidade', 'Mudança', 'Provocação'],
+        description: 'Você não aceita o status quo. Sua energia é de ruptura, transformação e intensidade.',
+      },
+      'Mago': {
+        name: 'Mago',
+        icon: '◇',
+        keywords: ['Transformação', 'Visão', 'Poder mental', 'Inspiração', 'Mistério'],
+        description: 'Você é capaz de transformar a realidade e encantar as pessoas com sua visão inspiradora e perspicaz.',
+      },
+      'Amante': {
+        name: 'Amante',
+        icon: '◇',
+        keywords: ['Conexão', 'Sensorialidade', 'Beleza', 'Paixão', 'Afinidade'],
+        description: 'Você busca conexões verdadeiras e profundas. Sua imagem transborda beleza, sensorialidade e encanto.',
+      },
+      'Bobo da Corte': {
+        name: 'Bobo da Corte',
+        icon: '◇',
+        keywords: ['Alegria', 'Humor', 'Espontaneidade', 'Diversão', 'Descontração'],
+        description: 'Você torna qualquer ambiente mais leve e divertido. Sua essência é aproveitar o momento com alegria.',
+      },
+      'Cuidador': {
+        name: 'Cuidador',
+        icon: '◇',
+        keywords: ['Proteção', 'Empatia', 'Acolhimento', 'Doação', 'Generosidade'],
+        description: 'Você coloca o bem-estar do outro em primeiro lugar. Sua imagem transmite confiança e muito acolhimento.',
+      },
+      'Criador': {
+        name: 'Criador',
+        icon: '◇',
+        keywords: ['Inovação', 'Autoexpressão', 'Originalidade', 'Visão única', 'Arte'],
+        description: 'Você tem a necessidade de materializar o que imagina. É movido pela inovação e pela autoexpressão.',
+      },
+      'Governante': {
+        name: 'Governante',
+        icon: '◇',
+        keywords: ['Liderança', 'Poder', 'Controle', 'Status', 'Autoridade'],
+        description: 'Você gosta de estar no controle e tem talento natural para liderar. Sua imagem transmite respeito e autoridade.',
+      },
+      'Cara Comum': {
+        name: 'Cara Comum',
+        icon: '◇',
+        keywords: ['Pertencimento', 'Igualdade', 'Simplicidade', 'Acessibilidade', 'Realismo'],
+        description: 'Você valoriza conexões reais sem afetações. Sua maior força é a capacidade de gerar empatia e identificação.',
+      }
+    };
+
+    /* ----------------------------------------------------------
+       OFFER DATA
+       ---------------------------------------------------------- */
+    const OFFERS = {
+      consultoria: {
+        eyebrow: 'Recomendação personalizada',
+        title: 'Uma Consultoria de Imagem<br/><em>pode transformar seus resultados</em>',
+        body: 'Descobrir seu arquétipo é o primeiro passo. Uma consultoria personalizada irá ajudá-la a alinhar essa essência à sua imagem de forma estratégica.',
+        btnClass: 'btn-cta btn-cta-consult',
+        btnText: 'Agendar conversa',
+        btnHref: 'https://wa.me/5511971202293?text=Ol%C3%A1,%20acabei%20de%20fazer%20o%20teste%20de%20Arqu%C3%A9tipos,%20gostaria%20de%20conhecer%20a%20consultoria%20de%20imagem%20estrat%C3%A9gica.%20',
+      }
+    };
+
+    /* ----------------------------------------------------------
+       STATE
+       ---------------------------------------------------------- */
+    const state = {
+      currentQ: 0,
+      answers: [],
+      lead: { name: '', whatsapp: '', instagram: '' },
+    };
+
+    /* ----------------------------------------------------------
+       SCREEN NAVIGATION
+       ---------------------------------------------------------- */
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+        s.style.display = 'none';
+      });
+      const target = document.getElementById(id);
+      target.style.display = 'flex';
+      requestAnimationFrame(() => requestAnimationFrame(() => target.classList.add('active')));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ----------------------------------------------------------
+       START
+       ---------------------------------------------------------- */
+    function startQuiz() {
+      state.currentQ = 0;
+      state.answers = new Array(QUESTIONS.length).fill(null);
+      showScreen('screen-quiz');
+      renderQuestion(0, 'init');
+    }
+
+    /* ----------------------------------------------------------
+       RENDER QUESTION
+       ---------------------------------------------------------- */
+    function renderQuestion(index, direction) {
+      const q = QUESTIONS[index];
+      const card = document.getElementById('question-card');
+
+      if (direction && direction !== 'init') {
+        card.classList.add('question-exit');
+      }
+
+      setTimeout(() => {
+        card.classList.remove('question-exit');
+
+        // Progress
+        const total = QUESTIONS.length;
+        const num = index + 1;
+        const pct = (num / total) * 100;
+        document.getElementById('progress-count').textContent = `${num} / ${total}`;
+        document.getElementById('progress-fill').style.width = `${pct}%`;
+        document.getElementById('progress-dot').style.left = `${pct}%`;
+        document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', num);
+
+        // Content
+        document.getElementById('question-number').textContent =
+          `Pergunta ${String(num).padStart(2, '0')}`;
+        document.getElementById('question-text').textContent = q.text;
+
+        // Options
+        const list = document.getElementById('options-list');
+        list.innerHTML = '';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-btn';
+          btn.setAttribute('role', 'listitem');
+          btn.setAttribute('aria-label', `Opção ${opt.letter}: ${opt.text}`);
+          btn.dataset.letter = opt.letter;
+          if (state.answers[index] === opt.letter) btn.classList.add('selected');
+          btn.innerHTML = `
+            <span class="option-letter">${opt.letter}</span>
+            <span>${opt.text}</span>
+          `;
+          btn.addEventListener('click', () => selectOption(opt.letter, btn));
+          list.appendChild(btn);
+        });
+
+        // Nav
+        document.getElementById('btn-back').disabled = (index === 0);
+        updateNextButton(index);
+
+        // Hint
+        const hint = document.getElementById('selection-hint');
+        hint.classList.toggle('visible', !state.answers[index]);
+
+        // Animate in
+        card.classList.add('question-enter');
+        setTimeout(() => card.classList.remove('question-enter'), 450);
+      }, (direction && direction !== 'init') ? 260 : 0);
+    }
+
+    /* ----------------------------------------------------------
+       SELECT OPTION
+       ---------------------------------------------------------- */
+    function selectOption(letter, clickedBtn) {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      clickedBtn.classList.add('selected');
+      state.answers[state.currentQ] = letter;
+      document.getElementById('selection-hint').classList.remove('visible');
+      updateNextButton(state.currentQ);
+      setTimeout(() => goNext(), 380);
+    }
+
+    /* ----------------------------------------------------------
+       UPDATE NEXT BUTTON
+       ---------------------------------------------------------- */
+    function updateNextButton(index) {
+      const btn = document.getElementById('btn-next');
+      const isLast = (index === QUESTIONS.length - 1);
+      btn.disabled = !state.answers[index];
+      btn.innerHTML = isLast
+        ? `Finalizar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`
+        : `Continuar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+    }
+
+    /* ----------------------------------------------------------
+       NAVIGATION
+       ---------------------------------------------------------- */
+    function goNext() {
+      if (!state.answers[state.currentQ]) {
+        document.getElementById('selection-hint').classList.add('visible');
+        return;
+      }
+      if (state.currentQ < QUESTIONS.length - 1) {
+        state.currentQ++;
+        renderQuestion(state.currentQ, 'forward');
+      } else {
+        showScreen('screen-form');
+      }
+    }
+
+    function goBack() {
+      if (state.currentQ > 0) {
+        state.currentQ--;
+        renderQuestion(state.currentQ, 'back');
+      }
+    }
+
+    /* ----------------------------------------------------------
+       SUBMIT FORM
+       ---------------------------------------------------------- */
+    function submitForm(e) {
+      e.preventDefault();
+      const name = document.getElementById('input-name').value.trim();
+      const whatsapp = document.getElementById('input-whatsapp').value.trim();
+      const instagram = document.getElementById('input-instagram').value.trim();
+
+      const fields = [
+        { id: 'input-name', val: name },
+        { id: 'input-whatsapp', val: whatsapp },
+        { id: 'input-instagram', val: instagram },
+      ];
+      let valid = true;
+      fields.forEach(({ id, val }) => {
+        const el = document.getElementById(id);
+        if (!val) {
+          el.style.borderBottomColor = '#C8A46A';
+          el.addEventListener('input', () => { el.style.borderBottomColor = ''; }, { once: true });
+          valid = false;
+        }
+      });
+      if (!valid) return;
+
+      state.lead = { name, whatsapp, instagram };
+      console.log('📋 Lead:', state.lead);
+      console.log('📊 Respostas:', state.answers);
+
+      // Calcula arquétipo
+      const archetypeId = calculateArchetype();
+
+      // Monta payload para a planilha
+      const payload = {
+        timestamp: new Date().toISOString(),
+        nome: name,
+        whatsapp: whatsapp,
+        instagram: instagram,
+        p1: state.answers[0] || '',
+        p2: state.answers[1] || '',
+        p3: state.answers[2] || '',
+        p4: state.answers[3] || '',
+        p5: state.answers[4] || '',
+        p6: state.answers[5] || '',
+        p7: state.answers[6] || '',
+        p8: state.answers[7] || '',
+        arquetipo: archetypeId,
+        oferta: 'Consultoria',
+      };
+
+      // Envia para Google Sheets (se URL configurada)
+      if (WEBHOOK_URL) {
+        fetch(WEBHOOK_URL, {
+          method: 'POST',
+          mode: 'no-cors', // evita erro de CORS com Apps Script
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }).catch(err => console.warn('Webhook error:', err));
+      }
+
+      console.log('📊 Payload enviado:', payload);
+
+      buildResult();
+      showScreen('screen-result');
+    }
+
+    /* ----------------------------------------------------------
+       CALCULATE ARCHETYPE
+       ---------------------------------------------------------- */
+    function calculateArchetype() {
+      const count = {};
+      state.answers.forEach((letter, index) => {
+        if (letter) {
+          const opt = QUESTIONS[index].options.find(o => o.letter === letter);
+          if (opt && opt.archetype) {
+            count[opt.archetype] = (count[opt.archetype] || 0) + 1;
+          }
+        }
+      });
+      let max = 0, dominant = 'Inocente';
+      for (const [arq, c] of Object.entries(count)) {
+        if (c > max) { max = c; dominant = arq; }
+      }
+      return dominant;
+    }
+
+    /* ----------------------------------------------------------
+       BUILD RESULT
+       ---------------------------------------------------------- */
+    function buildResult() {
+      const archetypeId = calculateArchetype();
+      const style = ARCHETYPES[archetypeId];
+      const offer = OFFERS.consultoria;
+      const firstName = state.lead.name.split(' ')[0];
+
+      // Strip
+      document.getElementById('result-strip-text').textContent =
+        `✦  Resultado do Quiz  ✦`;
+
+      // Reveal section
+      document.getElementById('result-reveal').setAttribute('data-style', style.name);
+      document.getElementById('result-icon').textContent = style.icon;
+      document.getElementById('result-name-label').textContent =
+        `${firstName}, seu arquétipo predominante é`;
+      document.getElementById('result-style-name').textContent = style.name;
+
+      // Keywords
+      const kwEl = document.getElementById('result-keywords');
+      kwEl.innerHTML = '';
+      style.keywords.forEach(kw => {
+        const span = document.createElement('span');
+        span.className = 'result-keyword';
+        span.textContent = kw;
+        kwEl.appendChild(span);
+      });
+
+      // Description
+      const descEl = document.getElementById('result-description');
+      descEl.innerHTML = '';
+      style.description.split('\n\n').forEach((para, i) => {
+        const p = document.createElement('p');
+        p.textContent = para;
+        descEl.appendChild(p);
+      });
+
+      // CTA
+      document.getElementById('cta-eyebrow').textContent = offer.eyebrow;
+      document.getElementById('cta-title').innerHTML = offer.title;
+      document.getElementById('cta-body').textContent = offer.body;
+
+      const wrap = document.getElementById('cta-btn-wrap');
+      wrap.innerHTML = '';
+      const btn = document.createElement('a');
+      btn.href = offer.btnHref;
+      btn.className = offer.btnClass;
+      btn.innerHTML = offer.btnText;
+      btn.id = 'btn-cta-consult';
+      wrap.appendChild(btn);
+
+      console.log('🎯 Resultado:', { archetype: style.name, lead: state.lead });
+    }
+
+    /* ----------------------------------------------------------
+       WHATSAPP MASK
+       ---------------------------------------------------------- */
+    document.getElementById('input-whatsapp').addEventListener('input', function () {
+      let v = this.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length >= 7) v = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+      else if (v.length >= 3) v = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+      else if (v.length >= 1) v = `(${v}`;
+      this.value = v;
+    });
+
+    /* ----------------------------------------------------------
+       INIT
+       ---------------------------------------------------------- */
+    document.querySelectorAll('.screen').forEach((s, i) => {
+      s.style.display = i === 0 ? 'flex' : 'none';
+      if (i !== 0) s.classList.remove('active');
+    });
+  </script>
+</body>
+
+</html>
