@@ -64,6 +64,7 @@
             letter-spacing: 1px;
             margin-bottom: 8px;
             background: linear-gradient(135deg, #fff, #a1a1aa);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -99,6 +100,7 @@
 
         .link-card:nth-child(1) { animation-delay: 0.2s; }
         .link-card:nth-child(2) { animation-delay: 0.4s; }
+        .link-card:nth-child(3) { animation-delay: 0.6s; }
 
         .link-card::before {
             content: '';
@@ -229,7 +231,7 @@
             </a>
 
             <!-- Caminho 2: Diagnóstico Digital -->
-            <a href="http://elainearnone.com.br/quiz-estilo-pessoal/" class="link-card">
+            <a href="../quiz-estilo-pessoal/index.html" class="link-card">
                 <div class="link-title">
                     Descubra seu Estilo através de um Quiz 
                     <span>→</span>
@@ -241,11 +243,25 @@
                     ✓ Qual o melhor caminho para evoluir sua imagem com mais confiança e estratégia 
                 </div>
             </a>
+
+            <!-- Caminho 3: Quiz de Arquétipos -->
+            <a href="../quiz-arquetipos/index.html" class="link-card">
+                <div class="link-title">
+                    Descubra seu Arquétipo através de um Quiz
+                    <span>→</span>
+                </div>
+                <div class="link-desc">
+                    Em poucos minutos você descobrirá: 
+                    ✓ Seu arquétipo predominante 
+                    ✓ O que sua essência comunica hoje 
+                    ✓ Qual o melhor caminho para alinhar sua imagem com sua verdadeira identidade 
+                </div>
+            </a>
         </main>
 
         <!-- About Section -->
         <section class="about-section">
-            <img src="./Imagemelaine.jpg" alt="Elaine Arnone" class="about-image">
+            <img src="../Imagemelaine.jpg" alt="Elaine Arnone" class="about-image">
             <div class="about-content">
                 <h2>Estrategista de Imagem</h2>
                 <p>Com mais de 20 anos de mercado e formação na 3ª turma de moda do Brasil, Elaine Arnone é pioneira na aplicação de arquétipos e psicanálise à imagem pessoal.</p>
