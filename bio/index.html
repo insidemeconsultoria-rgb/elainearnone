@@ -51,10 +51,20 @@
             gap: 40px;
         }
 
-        /* Header Section */
         .header {
             text-align: center;
             animation: fadeInDown 0.8s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            animation: fadeInDown 0.8s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .header h1 {
@@ -89,13 +99,25 @@
             background-color: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 24px;
             text-decoration: none;
             color: var(--text-primary);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .link-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .link-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
         }
 
         .link-card:nth-child(1) { animation-delay: 0.2s; }
@@ -112,6 +134,8 @@
             background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.05), transparent);
             transform: translateX(-100%);
             transition: transform 0.6s ease;
+            pointer-events: none;
+            z-index: 2;
         }
 
         .link-card:hover {
@@ -220,41 +244,50 @@
         <!-- Links -->
         <main class="links-section">
             <!-- Caminho 1: Mentoria/Consultoria -->
-            <a href="https://typebot.co/aplicacao-elainearnone" target="_blank" class="link-card">
-                <div class="link-title">
-                    Aplicação pra Consultoria ou Assessoria
-                    <span>→</span>
-                </div>
-                <div class="link-desc">
-                    Alinhe a sua autoridade visual à sua competência técnica através de um acompanhamento estratégico exclusivo.
+            <a href="https://typebot.co/aplicacao-elaine" target="_blank" class="link-card">
+                <img src="assessoria.png" alt="Assessoria" class="link-img">
+                <div class="link-content">
+                    <div class="link-title">
+                        Aplicação pra Consultoria ou Assessoria
+                        <span>→</span>
+                    </div>
+                    <div class="link-desc">
+                        Alinhe a sua autoridade visual à sua competência técnica através de um acompanhamento estratégico exclusivo.
+                    </div>
                 </div>
             </a>
 
             <!-- Caminho 2: Diagnóstico Digital -->
             <a href="../quiz-estilo-pessoal/index.html" class="link-card">
-                <div class="link-title">
-                    Descubra seu Estilo através de um Quiz 
-                    <span>→</span>
-                </div>
-                <div class="link-desc">
-                    Em poucos minutos você descobrirá: 
-                    ✓ Seu estilo predominante 
-                    ✓ O que sua imagem comunica hoje 
-                    ✓ Qual o melhor caminho para evoluir sua imagem com mais confiança e estratégia 
+                <img src="quizestilo.png" alt="Quiz Estilo Pessoal" class="link-img">
+                <div class="link-content">
+                    <div class="link-title">
+                        Descubra seu Estilo através de um Quiz 
+                        <span>→</span>
+                    </div>
+                    <div class="link-desc">
+                        Em poucos minutos você descobrirá: <br>
+                        ✓ Seu estilo predominante <br>
+                        ✓ O que sua imagem comunica hoje <br>
+                        ✓ Qual o melhor caminho para evoluir sua imagem
+                    </div>
                 </div>
             </a>
 
             <!-- Caminho 3: Quiz de Arquétipos -->
             <a href="../quiz-arquetipos/index.html" class="link-card">
-                <div class="link-title">
-                    Descubra seu Arquétipo através de um Quiz
-                    <span>→</span>
-                </div>
-                <div class="link-desc">
-                    Em poucos minutos você descobrirá: 
-                    ✓ Seu arquétipo predominante 
-                    ✓ O que sua essência comunica hoje 
-                    ✓ Qual o melhor caminho para alinhar sua imagem com sua verdadeira identidade 
+                <img src="quizarquetipos.png" alt="Quiz de Arquétipos" class="link-img">
+                <div class="link-content">
+                    <div class="link-title">
+                        Descubra seu Arquétipo através de um Quiz
+                        <span>→</span>
+                    </div>
+                    <div class="link-desc">
+                        Em poucos minutos você descobrirá: <br>
+                        ✓ Seu arquétipo predominante <br>
+                        ✓ O que sua essência comunica hoje <br>
+                        ✓ Como alinhar sua imagem com sua verdadeira identidade 
+                    </div>
                 </div>
             </a>
         </main>
